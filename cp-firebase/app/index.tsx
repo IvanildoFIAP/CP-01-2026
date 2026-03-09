@@ -2,7 +2,9 @@ import { auth } from "@/services/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { Button, StyleSheet, TextInput, View } from "react-native";
+import { useRouter } from 'expo-router'
 export default function Login() {
+    const router = useRouter()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const login = async () => {
@@ -12,9 +14,12 @@ export default function Login() {
                 email,
                 password
             );
-            alert(`Usuário logado: ${email}`);
+            //alert(`Usuário logado: ${email}`);
             const token = await credential.user.getIdToken();
             console.log(token);
+            router.push({
+                    pathname: './logado',
+                })
         } catch (error: any) {
             alert(`Usuário NÃO logado`);
             console.log(error);
